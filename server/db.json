@@ -1,0 +1,269 @@
+{
+  "logo": {
+    "text": "Espanishescool",
+    "subtitle": "Academia",
+    "letter": "E",
+    "bgColor": "#226D7A",
+    "textColor": "#FFFFFF"
+  },
+  "socialLinks": [
+    { "name": "Facebook", "url": "https://facebook.com/espanishescool", "visible": true },
+    { "name": "Instagram", "url": "https://instagram.com/espanishescool", "visible": true },
+    { "name": "Twitter", "url": "https://twitter.com/espanishescool", "visible": true },
+    { "name": "YouTube", "url": "https://youtube.com/c/espanishescool", "visible": false },
+    { "name": "TikTok", "url": "https://tiktok.com/@espanishescool", "visible": true },
+    { "name": "WhatsApp", "url": "https://wa.me/523300000000", "visible": true }
+  ],
+  "hero": {
+    "title": "Aprende el español que realmente se habla en México",
+    "subtitle": "Clases personalizadas de inmersión 1-a-1 con tutores nativos certificados. Desde vocabulario de taquerías hasta modismos corporativos.",
+    "ctaText": "Reserva tu Clase de Prueba Hoy"
+  },
+  "tutors": [
+    {
+      "id": "t1",
+      "name": "Elena R.",
+      "origin": "CDMX, México",
+      "rating": 5.0,
+      "experience": "10+ años exp.",
+      "specialties": ["Español Conversacional", "Doble Sentido y Comedia", "Preparación DELE", "Español de Negocios"],
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300",
+      "bio": "¡Hola! Soy Elena, pedagoga egresada de la UNAM. Llevo más de una década enseñando a estudiantes de más de 45 países. Adoro platicar sobre la historia secreta de los barrios de la Ciudad de México, el cine de oro mexicano y la literatura latinoamericana. ¡Aprenderás con risas y paciencia!",
+      "funFact": "Tengo una colección de más de 120 cactus diferentes en mi balcón en Coyoacán.",
+      "voiceSampleText": "¡Hola! Bienvenidos a Espanishescool. Soy Elena y me encantaría ser tu guía en esta aventura por el idioma español. ¡Te espero pronto en clase!",
+      "timeSlots": [
+        { "id": "t1-s1", "day": "Lunes", "time": "09:00 AM", "isAvailable": true },
+        { "id": "t1-s2", "day": "Lunes", "time": "11:00 AM", "isAvailable": true },
+        { "id": "t1-s3", "day": "Martes", "time": "01:00 PM", "isAvailable": false },
+        { "id": "t1-s4", "day": "Martes", "time": "04:00 PM", "isAvailable": true },
+        { "id": "t1-s5", "day": "Miércoles", "time": "10:00 AM", "isAvailable": true },
+        { "id": "t1-s6", "day": "Miércoles", "time": "02:00 PM", "isAvailable": true },
+        { "id": "t1-s7", "day": "Jueves", "time": "09:00 AM", "isAvailable": true },
+        { "id": "t1-s8", "day": "Viernes", "time": "11:00 AM", "isAvailable": true }
+      ]
+    },
+    {
+      "id": "t2",
+      "name": "Mateo S.",
+      "origin": "Guadalajara, Jal.",
+      "rating": 4.9,
+      "experience": "7 años exp.",
+      "specialties": ["Español de Supervivencia", "Pronunciación Acertada", "Cultura de Jalisco", "Niños y Jóvenes"],
+      "avatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=300",
+      "bio": "¡Qué onda! Soy Mateo. Nací rodeado de mariachis, tequila y una rica calidez cultural. Me enfoco en metodologías sumamente visuales e interactivas. Conmigo dominarás la pronunciación del acento mexicano rápidamente y hablarás de forma relajada y segura.",
+      "funFact": "Toco el violín en una banda local de mariachi acústico fusión los fines de semana.",
+      "voiceSampleText": "¿Qué tal? ¿Cómo estás? Soy Mateo, de Guadalajara. Conmigo vas a platicar de forma súper natural. ¡Agenda tu clase de prueba!",
+      "timeSlots": [
+        { "id": "t2-s1", "day": "Lunes", "time": "10:00 AM", "isAvailable": true },
+        { "id": "t2-s2", "day": "Martes", "time": "03:00 PM", "isAvailable": true },
+        { "id": "t2-s3", "day": "Miércoles", "time": "11:00 AM", "isAvailable": true },
+        { "id": "t2-s4", "day": "Miércoles", "time": "05:00 PM", "isAvailable": false },
+        { "id": "t2-s5", "day": "Jueves", "time": "01:00 PM", "isAvailable": true },
+        { "id": "t2-s6", "day": "Viernes", "time": "09:00 AM", "isAvailable": true }
+      ]
+    },
+    {
+      "id": "t3",
+      "name": "Isabella V.",
+      "origin": "Monterrey, N.L.",
+      "rating": 4.9,
+      "experience": "6 años exp.",
+      "specialties": ["Español Comercial", "Entrevistas de Trabajo", "Jerga Corporativa", "Preparación Universitaria"],
+      "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300",
+      "bio": "¡Hola! Soy Isabella. Me especializo en preparar a estudiantes de todo el mundo para ingresar al mercado laboral de habla hispana. Mis clases son dinámicas, estructuradas y con un alto nivel de exigencia profesional, siempre con el inigualable toque amigable del norte mexicano.",
+      "funFact": "He corrido 3 maratones internacionales completos y soy fanática de los asados norteños.",
+      "voiceSampleText": "Hola, un gusto saludarte. Soy Isabella, experta en español para negocios y propósitos corporativos. ¡Llevemos tu carrera al siguiente nivel!",
+      "timeSlots": [
+        { "id": "t3-s1", "day": "Lunes", "time": "08:00 AM", "isAvailable": true },
+        { "id": "t3-s2", "day": "Lunes", "time": "02:00 PM", "isAvailable": true },
+        { "id": "t3-s3", "day": "Martes", "time": "10:00 AM", "isAvailable": true },
+        { "id": "t3-s4", "day": "Jueves", "time": "04:00 PM", "isAvailable": true },
+        { "id": "t3-s5", "day": "Viernes", "time": "03:00 PM", "isAvailable": true }
+      ]
+    },
+    {
+      "id": "t4",
+      "name": "Sofía M.",
+      "origin": "Oaxaca, Oax.",
+      "rating": 5.0,
+      "experience": "9 años exp.",
+      "specialties": ["Gastronomía y Vocabulario", "Historia e Indigenismo", "Expresión Escrita", "Artes Tradicionales"],
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300",
+      "bio": "¡Bienvenidos! Soy Sofía. Oaxaca es mi cuna, famosa mundialmente por el mezcal, el mole y las artesanías maravillosas. En mis clases combinamos la adquisición lingüística sólida con recetas tradicionales e historia del arte prehispánico.",
+      "funFact": "Mi familia produce chocolate artesanal oaxaqueño desde hace cuatro generaciones.",
+      "voiceSampleText": "¡Hola a todos! Soy Sofía, apasionada de las letras y la herencia de Oaxaca. Descubrirás el español mediante el sabor y el arte tradicional.",
+      "timeSlots": [
+        { "id": "t4-s1", "day": "Martes", "time": "09:00 AM", "isAvailable": true },
+        { "id": "t4-s2", "day": "Martes", "time": "11:00 AM", "isAvailable": true },
+        { "id": "t4-s3", "day": "Miércoles", "time": "04:00 PM", "isAvailable": true },
+        { "id": "t4-s4", "day": "Jueves", "time": "09:00 AM", "isAvailable": true },
+        { "id": "t4-s5", "day": "Jueves", "time": "02:00 PM", "isAvailable": true },
+        { "id": "t4-s6", "day": "Viernes", "time": "10:00 AM", "isAvailable": true }
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "id": "principiante",
+      "level": "A1 - A2",
+      "title": "Español de Supervivencia",
+      "subtitle": "Nivel Principiante",
+      "description": "Aprende a presentarte, pedir en restaurantes, hacer preguntas básicas y moverte por México sin frustración.",
+      "image": "https://images.unsplash.com/photo-1512813583145-baaa340ef29f?auto=format&fit=crop&q=80&w=400",
+      "duration": "4 semanas (16 lecciones)",
+      "accentColor": "#B0E0E9",
+      "lessons": [
+        { "id": "p1", "title": "Saludos y Cortesías Mexicanas", "description": "Cómo saludar con calidez y entender la cortesía local (despedidas, favores, gracias).", "duration": "60 min", "order": 1 },
+        { "id": "p2", "title": "Explorando la Taquería", "description": "Vocabulario esencial de comida, cómo ordenar tacos, pedir la cuenta y expresar preferencias.", "duration": "60 min", "order": 2 },
+        { "id": "p3", "title": "Direcciones en la Ciudad", "description": "Cómo preguntar el camino, orientarse en la CDMX y usar el transporte con confianza.", "duration": "60 min", "order": 3 },
+        { "id": "p4", "title": "Números, Precios y Mercados", "description": "Regateo básico constructivo, leer precios y manejar transacciones en pesos mexicanos.", "duration": "60 min", "order": 4 }
+      ],
+      "vocabulary": [
+        { "spanish": "¡Buenos días!", "english": "Good morning!", "pronunciationHint": "bwe-nos dee-as", "exampleSpanish": "¡Buenos días! ¿Qué tal están?", "exampleEnglish": "Good morning! How are you all?" },
+        { "spanish": "Por favor", "english": "Please", "pronunciationHint": "por fah-vor", "exampleSpanish": "Unos tacos al pastor, por favor.", "exampleEnglish": "Some tacos al pastor, please." },
+        { "spanish": "Muchas gracias", "english": "Thank you very much", "pronunciationHint": "moo-chas grah-syas", "exampleSpanish": "Muchas gracias por la comida estuvo riquísima.", "exampleEnglish": "Thank you very much for the food, it was delicious." },
+        { "spanish": "¿Cuánto cuesta?", "english": "How much does it cost?", "pronunciationHint": "kwan-to kwes-tah", "exampleSpanish": "¿Cuánto cuesta este sarape?", "exampleEnglish": "How much does this cloak cost?" },
+        { "spanish": "La cuenta, por favor", "english": "The bill, please", "pronunciationHint": "lah kwen-tah por fah-vor", "exampleSpanish": "Mesero, ¿me trae la cuenta, por favor?", "exampleEnglish": "Waiter, will you bring me the bill, please?" },
+        { "spanish": "Con permiso", "english": "Excuse me (to pass)", "pronunciationHint": "kon per-mee-so", "exampleSpanish": "Con permiso, necesito pasar por aquí.", "exampleEnglish": "Excuse me, I need to pass through here." }
+      ],
+      "quiz": [
+        {
+          "id": "qp1",
+          "question": "¿Cómo pedirías amablemente la cuenta en un restaurante mexicano?",
+          "options": ["¡Oye, dame el costo!", "La cuenta, por favor.", "Pagaré ahora.", "Dame mis gastos."],
+          "correctAnswer": "La cuenta, por favor.",
+          "explanation": "\"La cuenta, por favor\" es la frase más cortés y común para solicitar la cuenta al mesero en cualquier negocio de comida."
+        },
+        {
+          "id": "qp2",
+          "question": "¿Cuál es el significado de la palabra \"Por favor\"?",
+          "options": ["You are welcome", "Please", "Excuse me", "I am sorry"],
+          "correctAnswer": "Please",
+          "explanation": "\"Por favor\" se utiliza en español para expresar cortesía al pedir algo, equivalente a \"Please\" en inglés."
+        },
+        {
+          "id": "qp3",
+          "question": "¿Qué frase utilizas para pasar educadamente entre una multitud?",
+          "options": ["¡Muévete!", "Adiós amigos", "Con permiso", "¿Qué onda?"],
+          "correctAnswer": "Con permiso",
+          "explanation": "\"Con permiso\" es la expresión perfecta y respetuosa para pedir espacio para pasar o ingresar a un lugar."
+        }
+      ]
+    },
+    {
+      "id": "intermedio",
+      "level": "B1 - B2",
+      "title": "Español Conversacional Fluido",
+      "subtitle": "Nivel Intermedio",
+      "description": "Expresa opiniones, comprende la jerga cotidiana, cuenta historias en pasado y conéctate a nivel cultural profundo.",
+      "image": "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&q=80&w=400",
+      "duration": "6 semanas (24 lecciones)",
+      "accentColor": "#F2A68D",
+      "lessons": [
+        { "id": "i1", "title": "Narrar Experiencias en Pasado", "description": "Aprende cuándo usar Pretérito Indefinido vs Imperfecto con historias cotidianas.", "duration": "60 min", "order": 1 },
+        { "id": "i2", "title": "El Arte de Subjuntivo sin Pánico", "description": "Cómo expresar deseos, dudas, hipótesis y sentimientos de forma natural.", "duration": "60 min", "order": 2 },
+        { "id": "i3", "title": "Modismos y Estilo Mexicano", "description": "Expresiones coloquiales auténticas como \"buena onda\", \"chamba\", \"echar la mano\".", "duration": "60 min", "order": 3 },
+        { "id": "i4", "title": "Debatir Temas de Interés", "description": "Estructurar argumentos lógicos, opinar sobre noticias locales y eventos culturales.", "duration": "60 min", "order": 4 }
+      ],
+      "vocabulary": [
+        { "spanish": "Platicar", "english": "To chat / talk", "pronunciationHint": "plah-tee-kar", "exampleSpanish": "Me encanta platicar contigo por las tardes.", "exampleEnglish": "I love to chat with you in the afternoons." },
+        { "spanish": "Chamba", "english": "Work / Job", "pronunciationHint": "cham-bah", "exampleSpanish": "Tengo mucha chamba esta semana en la oficina.", "exampleEnglish": "I have a lot of work this week in the office." },
+        { "spanish": "Echar la mano", "english": "To give a hand / help", "pronunciationHint": "eh-char lah mah-no", "exampleSpanish": "¿Me puedes echar la mano con este proyecto?", "exampleEnglish": "Can you give me a hand with this project?" },
+        { "spanish": "Buena onda", "english": "Cool / Friendly vibe", "pronunciationHint": "bwe-nah on-dah", "exampleSpanish": "Tu tutor de español de la CDMX es súper buena onda.", "exampleEnglish": "Your Spanish tutor from CDMX is super cool/friendly." },
+        { "spanish": "Apapachar", "english": "To coddle / hug with the soul", "pronunciationHint": "ah-pah-pah-char", "exampleSpanish": "A mi abuela le gusta apapachar a sus nietos.", "exampleEnglish": "My grandmother likes to coddle/soul-hug her grandchildren." }
+      ],
+      "quiz": [
+        {
+          "id": "qi1",
+          "question": "¿Qué significa el mexicanismo colloquial \"Chamba\"?",
+          "options": ["Una fiesta ruidosa", "El trabajo o empleo", "Una bebida típica mexicana", "Un problema difícil"],
+          "correctAnswer": "El trabajo o empleo",
+          "explanation": "En México, \"chamba\" es un término sumamente popular para referirse al empleo, trabajo o actividad laboral."
+        },
+        {
+          "id": "qi2",
+          "question": "¿Cómo invitarías a alguien a ayudarte con una frase coloquial?",
+          "options": ["¿Me echas la mano?", "¿Me muerdes el brazo?", "¿Me das un golpe?", "¿Me compras un refresco?"],
+          "correctAnswer": "¿Me echas la mano?",
+          "explanation": "\"Echar la mano\" significa ayudar o brindar asistencia a alguien de manera solidaria."
+        }
+      ]
+    },
+    {
+      "id": "avanzado",
+      "level": "C1 - C2",
+      "title": "Español para Profesionales e Intérpretes",
+      "subtitle": "Nivel Avanzado",
+      "description": "Perfecto para quienes trabajan en entornos multinacionales, estudian literatura o necesitan dominar el registro formal intelectual.",
+      "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=400",
+      "duration": "8 semanas (32 lecciones)",
+      "accentColor": "#164A53",
+      "lessons": [
+        { "id": "a1", "title": "Español Corporativo y Negociación", "description": "Redacción de correos formales, terminología de contratos y finanzas mexicanas.", "duration": "60 min", "order": 1 },
+        { "id": "a2", "title": "Análisis Político y Social en México", "description": "Comprender debates de fondo, leer columnas periodísticas complejas y argumentar.", "duration": "60 min", "order": 2 },
+        { "id": "a3", "title": "Doble sentido y Albur Metafórico", "description": "Dominar la sutileza de los contextos, la ironía mexicana y los modismos históricos.", "duration": "60 min", "order": 3 },
+        { "id": "a4", "title": "Presentación Profesional de Impacto", "description": "Sustentar un discurso académico completo frente a una audiencia sin pausas vacilantes.", "duration": "60 min", "order": 4 }
+      ],
+      "vocabulary": [
+        { "spanish": "Asertividad", "english": "Assertiveness", "pronunciationHint": "ah-ser-tee-bee-dad", "exampleSpanish": "Es vital negociar con asertividad y tacto comercial.", "exampleEnglish": "It is vital to negotiate with assertiveness and commercial tact." },
+        { "spanish": "Desempeño", "english": "Performance", "pronunciationHint": "deh-sem-peh-nyoh", "exampleSpanish": "El desempeño del equipo superó las expectativas del trimestre.", "exampleEnglish": "El desempeño del equipo superó las expectativas del trimestre." },
+        { "spanish": "Vanguardia", "english": "Vanguard / Cutting-edge", "pronunciationHint": "ban-gwar-dyah", "exampleSpanish": "Nuestra metodología de inmersión está en la vanguardia educativa.", "exampleEnglish": "Our immersion methodology is at the educational vanguard." }
+      ],
+      "quiz": [
+        {
+          "id": "qa1",
+          "question": "¿Qué palabra describe mejor el rendimiento o productividad de una persona en su trabajo en el registro corporativo?",
+          "options": ["El alboroto", "El desempeño", "La holgazanería", "La tardanza"],
+          "correctAnswer": "El desempeño",
+          "explanation": "\"El desempeño\" es el término formal por excelencia para designar el rendimiento laboral o profesional."
+        }
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "res-1",
+      "name": "James Miller",
+      "country": "EEUU",
+      "text": "\"Las clases son increíbles. Mi tutor me enseñó no solo la gramática, sino cómo hablan realmente los jóvenes en CDMX. ¡Me siento muy seguro!\"",
+      "rating": 5,
+      "avatarInitials": "JD",
+      "avatarBgColor": "bg-[#226D7A]"
+    },
+    {
+      "id": "res-2",
+      "name": "Sarah Klein",
+      "country": "Alemania",
+      "text": "\"Ideal para mi trabajo. Me ayudaron a preparar una presentación en español para mi equipo en México en solo dos semanas. ¡Gran profesionalismo!\"",
+      "rating": 5,
+      "avatarInitials": "SK",
+      "avatarBgColor": "bg-[#a73918]"
+    },
+    {
+      "id": "res-3",
+      "name": "Akiko Matsu",
+      "country": "Japón",
+      "text": "\"Me encanta la flexibilidad. Puedo tomar mis clases a las 7 AM antes de ir a la oficina. Los materiales son muy divertidos y dinámicos.\"",
+      "rating": 5,
+      "avatarInitials": "AM",
+      "avatarBgColor": "bg-[#664600]"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "q-1",
+      "question": "¿Qué materiales necesito para mis clases?",
+      "answer": "¡Solo una computadora o tablet y buena conexión a internet! Todo el material didáctico (PDFs, ejercicios interactivos y grabaciones) está incluido en tu cuenta sin costo adicional, listo para descargarse en cualquier momento."
+    },
+    {
+      "id": "q-2",
+      "question": "¿Qué plataforma usan para las clases?",
+      "answer": "Nuestras clases en vivo de inmersión 1-on-1 se dictan directamente a través de una sala integrada de alta velocidad dentro de nuestro panel, o si lo prefieres, a través de enlaces rápidos de Zoom o Google Meet con un solo clic."
+    },
+    {
+      "id": "q-3",
+      "question": "¿Cómo funcionan las cancelaciones?",
+      "answer": "Entendemos que el día a día puede ser impredecible. Puedes cancelar o reprogramar cualquier sesión agendada de forma totalmente gratuita directa en tu panel estudiantil con un mínimo de 12 horas de anticipación."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Espanishescool",
+  "description": "Aprende español desde casa con tutores nativos de México de forma personalizada e interactiva.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
