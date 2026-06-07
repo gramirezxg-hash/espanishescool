@@ -20,7 +20,19 @@ const readDb = () => {
     if (!fs.existsSync(dbPath)) {
       // Create with default empty structure if doesn't exist
       const defaultDb = {
-        logo: { text: "Espanishescool", subtitle: "Academia", letter: "E", bgColor: "#226D7A", textColor: "#FFFFFF" },
+        adminPassword: "admin123",
+        users: [
+          {
+            id: "u-seed-1",
+            name: "James Miller",
+            email: "james.miller@gmail.com",
+            password: "student123",
+            role: "student",
+            credits: 10,
+            placementLevel: "Sin clasificar. ¡Toma el examen de colocación hoy!"
+          }
+        ],
+        logo: { text: "Espanishescool", subtitle: "Academia", letter: "E", bgColor: "#226D7A", textColor: "#FFFFFF", imageUrl: "" },
         socialLinks: [],
         hero: { title: "Aprende el español que realmente se habla en México", subtitle: "Clases personalizadas de inmersión 1-a-1", ctaText: "Reserva tu Clase" },
         tutors: [],
@@ -70,6 +82,109 @@ app.post('/api/data', (req, res) => {
     res.json({ success: true, message: "Data updated successfully", data: newData });
   } else {
     res.status(500).json({ success: false, message: "Failed to write database file" });
+  }
+});
+
+// --- Authentication & Users Endpoints ---
+
+// Student Registration
+app.post('/api/auth/register', (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ success: false, message: "Todos los campos son obligatorios" });
+  }
+
+  const db = readDb();
+  if (!db.users) db.users = [];
+
+  const userExists = db.users.some((u: any) => u.email.toLowerCase() === email.toLowerCase());
+  if (userExists) {
+    return res.status(400).json({ success: false, message: "El correo electrónico ya está registrado" });
+  }
+
+  const newUser = {
+    id: 'u-' + Date.now(),
+    name,
+    email: email.toLowerCase(),
+    password,
+    role: 'student',
+    credits: 10,
+    placementLevel: 'Sin clasificar. ¡Toma el examen de colocación hoy!'
+  };
+
+  db.users.push(newUser);
+  writeDb(db);
+
+  // Return user without password
+  const { password: _, ...userWithoutPassword } = newUser;
+  res.json({ success: true, user: userWithoutPassword });
+});
+
+// User Login
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: "Todos los campos son obligatorios" });
+  }
+
+  const db = readDb();
+  if (!db.users) db.users = [];
+
+  const user = db.users.find(
+    (u: any) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+  );
+
+  if (!user) {
+    return res.status(401).json({ success: false, message: "Correo o contraseña incorrectos" });
+  }
+
+  const { password: _, ...userWithoutPassword } = user;
+  res.json({ success: true, user: userWithoutPassword });
+});
+
+// Update Student Profile
+app.post('/api/users/update', (req, res) => {
+  const { id, name, email, credits, placementLevel } = req.body;
+  if (!id) {
+    return res.status(400).json({ success: false, message: "ID de usuario requerido" });
+  }
+
+  const db = readDb();
+  if (!db.users) db.users = [];
+
+  const index = db.users.findIndex((u: any) => u.id === id);
+  if (index === -1) {
+    return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+  }
+
+  db.users[index] = {
+    ...db.users[index],
+    name: name || db.users[index].name,
+    email: email ? email.toLowerCase() : db.users[index].email,
+    credits: credits !== undefined ? Number(credits) : db.users[index].credits,
+    placementLevel: placementLevel !== undefined ? placementLevel : db.users[index].placementLevel
+  };
+
+  writeDb(db);
+
+  const { password: _, ...userWithoutPassword } = db.users[index];
+  res.json({ success: true, user: userWithoutPassword });
+});
+
+// Verify Admin Password
+app.post('/api/auth/verify-admin', (req, res) => {
+  const { password } = req.body;
+  if (!password) {
+    return res.status(400).json({ success: false, message: "Contraseña requerida" });
+  }
+
+  const db = readDb();
+  const adminPassword = db.adminPassword || 'admin123';
+
+  if (password === adminPassword) {
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ success: false, message: "Contraseña de administrador incorrecta" });
   }
 });
 

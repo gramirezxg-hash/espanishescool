@@ -10,26 +10,37 @@ import CoursesTab from './components/CoursesTab';
 import TutorsTab from './components/TutorsTab';
 import CultureTab from './components/CultureTab';
 import Dashboard from './components/Dashboard';
+import AuthModal from './components/AuthModal';
+import AdminLogin from './components/AdminLogin';
+import AdminPanel from './components/AdminPanel';
 
-import { ActiveTab, BookedLesson, Tutor, Testimonial } from './types';
+import { ActiveTab, BookedLesson, Tutor, Testimonial, User } from './types';
 import { tutorsData, defaultTestimonials } from './data/tutors';
 import { Sparkles, ArrowRight, Sun, Heart } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true); // Pre-logged in for elite prompt demonstration!
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(false);
   
   // Dynamic Site Config State
   const [siteData, setSiteData] = useState<any>(null);
   const [isLoadingConfig, setIsLoadingConfig] = useState<boolean>(true);
 
-  // Student Context State
+  // Student Context State (Guest Fallbacks)
   const [studentName, setStudentName] = useState<string>('James Miller');
   const [studentEmail, setStudentEmail] = useState<string>('james.miller@gmail.com');
   const [credits, setCredits] = useState<number>(10);
   const [placementTestLevel, setPlacementTestLevel] = useState<string>(
     'Sin clasificar. ¡Toma el examen de colocación hoy!'
   );
+
+  // Computed Properties
+  const currentStudentName = currentUser ? currentUser.name : studentName;
+  const currentStudentEmail = currentUser ? currentUser.email : studentEmail;
+  const currentCredits = currentUser ? currentUser.credits : credits;
+  const currentPlacementLevel = currentUser ? currentUser.placementLevel : placementTestLevel;
 
   // App Persistence arrays
   const [bookedLessons, setBookedLessons] = useState<BookedLesson[]>([
@@ -98,17 +109,23 @@ export default function App() {
   useEffect(() => {
     const savedBookings = localStorage.getItem('espanish_bookings');
     const savedTestimonials = localStorage.getItem('espanish_testimonials');
-    const savedCredits = localStorage.getItem('espanish_credits');
-    const savedLevel = localStorage.getItem('espanish_level');
-    const savedName = localStorage.getItem('espanish_name');
-    const savedEmail = localStorage.getItem('espanish_email');
-
     if (savedBookings) setBookedLessons(JSON.parse(savedBookings));
     if (savedTestimonials) setTestimonials(JSON.parse(savedTestimonials));
-    if (savedCredits) setCredits(Number(savedCredits));
-    if (savedLevel) setPlacementTestLevel(savedLevel);
-    if (savedName) setStudentName(savedName);
-    if (savedEmail) setStudentEmail(savedEmail);
+
+    const savedUser = localStorage.getItem('espanish_user');
+    if (savedUser) {
+      setCurrentUser(JSON.parse(savedUser));
+    } else {
+      const savedCredits = localStorage.getItem('espanish_credits');
+      const savedLevel = localStorage.getItem('espanish_level');
+      const savedName = localStorage.getItem('espanish_name');
+      const savedEmail = localStorage.getItem('espanish_email');
+
+      if (savedCredits) setCredits(Number(savedCredits));
+      if (savedLevel) setPlacementTestLevel(savedLevel);
+      if (savedName) setStudentName(savedName);
+      if (savedEmail) setStudentEmail(savedEmail);
+    }
   }, []);
 
   const saveBookingsState = (newBookings: BookedLesson[]) => {
@@ -116,19 +133,58 @@ export default function App() {
     localStorage.setItem('espanish_bookings', JSON.stringify(newBookings));
   };
 
+  const updateCurrentUserFields = async (fields: Partial<User>) => {
+    if (!currentUser) {
+      // Guest local updates
+      if (fields.credits !== undefined) {
+        setCredits(fields.credits);
+        localStorage.setItem('espanish_credits', String(fields.credits));
+      }
+      if (fields.placementLevel !== undefined) {
+        setPlacementTestLevel(fields.placementLevel);
+        localStorage.setItem('espanish_level', fields.placementLevel);
+      }
+      if (fields.name !== undefined) {
+        setStudentName(fields.name);
+        localStorage.setItem('espanish_name', fields.name);
+      }
+      if (fields.email !== undefined) {
+        setStudentEmail(fields.email);
+        localStorage.setItem('espanish_email', fields.email);
+      }
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/users/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: currentUser.id,
+          ...fields
+        })
+      });
+      const data = await res.json();
+      if (data.success && data.user) {
+        setCurrentUser(data.user);
+        localStorage.setItem('espanish_user', JSON.stringify(data.user));
+      }
+    } catch (err) {
+      console.error("Error updating user profile:", err);
+    }
+  };
+
   const handleBookLesson = (booking: BookedLesson) => {
     const updated = [...bookedLessons, booking];
     saveBookingsState(updated);
     
     // Deduct credits if regular class was selected
-    if (booking.lessonType === 'Regular' && credits > 0) {
-      const remainingCredits = credits - 1;
-      setCredits(remainingCredits);
-      localStorage.setItem('espanish_credits', String(remainingCredits));
+    if (booking.lessonType === 'Regular' && currentCredits > 0) {
+      updateCurrentUserFields({ credits: currentCredits - 1 });
     }
 
-    // Auto update user name context if not registered
-    if (!localStorage.getItem('espanish_name') && booking.studentName) {
+    // Auto update user name context if not registered and guest
+    if (!currentUser && !localStorage.getItem('espanish_name') && booking.studentName) {
       setStudentName(booking.studentName);
       setStudentEmail(booking.studentEmail);
       localStorage.setItem('espanish_name', booking.studentName);
@@ -144,9 +200,7 @@ export default function App() {
   };
 
   const handlePurchaseComplete = (planName: string, creditsGranted: number) => {
-    const nextCredits = credits + creditsGranted;
-    setCredits(nextCredits);
-    localStorage.setItem('espanish_credits', String(nextCredits));
+    updateCurrentUserFields({ credits: currentCredits + creditsGranted });
     setActiveTab('dashboard');
   };
 
@@ -162,9 +216,16 @@ export default function App() {
     }
   };
 
-  const updatePlacementLevelInLocalStorage = (lvl: string) => {
-    setPlacementTestLevel(lvl);
-    localStorage.setItem('espanish_level', lvl);
+  const handleAuthSuccess = (user: User) => {
+    setCurrentUser(user);
+    localStorage.setItem('espanish_user', JSON.stringify(user));
+    setActiveTab('dashboard');
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('espanish_user');
+    setActiveTab('home');
   };
 
   // Safe fallback configuration values
@@ -173,7 +234,8 @@ export default function App() {
     subtitle: "Academia",
     letter: "E",
     bgColor: "#226D7A",
-    textColor: "#FFFFFF"
+    textColor: "#FFFFFF",
+    imageUrl: ""
   };
 
   const socialLinksConfig = siteData?.socialLinks || [
@@ -202,9 +264,15 @@ export default function App() {
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-        studentName={studentName}
+        isLoggedIn={!!currentUser}
+        setIsLoggedIn={(login) => {
+          if (login) {
+            setIsAuthModalOpen(true);
+          } else {
+            handleLogout();
+          }
+        }}
+        studentName={currentStudentName}
         logo={logoConfig}
       />
 
@@ -273,9 +341,9 @@ export default function App() {
         {activeTab === 'tutors' && (
           <TutorsTab
             tutors={tutorsConfig}
-            loggedIn={isLoggedIn}
+            loggedIn={!!currentUser}
             onBookLesson={handleBookLesson}
-            credits={credits}
+            credits={currentCredits}
           />
         )}
 
@@ -285,29 +353,46 @@ export default function App() {
 
         {activeTab === 'dashboard' && (
           <Dashboard
-            studentName={studentName}
+            studentName={currentStudentName}
             setStudentName={(name) => {
-              setStudentName(name);
-              localStorage.setItem('espanish_name', name);
+              updateCurrentUserFields({ name });
             }}
-            studentEmail={studentEmail}
+            studentEmail={currentStudentEmail}
             setStudentEmail={(email) => {
-              setStudentEmail(email);
-              localStorage.setItem('espanish_email', email);
+              updateCurrentUserFields({ email });
             }}
             bookedLessons={bookedLessons}
             onCancelLesson={handleCancelLesson}
-            credits={credits}
+            credits={currentCredits}
             onGrantCredits={(amount) => {
-              const updated = credits + amount;
-              setCredits(updated);
-              localStorage.setItem('espanish_credits', String(updated));
+              updateCurrentUserFields({ credits: currentCredits + amount });
             }}
-            placementTestLevel={placementTestLevel}
-            setPlacementTestLevel={updatePlacementLevelInLocalStorage}
-            siteData={siteData}
-            onSaveSiteData={handleSaveSiteData}
+            placementTestLevel={currentPlacementLevel}
+            setPlacementTestLevel={(lvl) => {
+              updateCurrentUserFields({ placementLevel: lvl });
+            }}
           />
+        )}
+
+        {activeTab === 'admin' && (
+          <div className="mx-auto max-w-7xl px-6 py-10">
+            {!isAdminAuthenticated ? (
+              <AdminLogin onLoginSuccess={() => setIsAdminAuthenticated(true)} />
+            ) : (
+              <AdminPanel
+                initialData={siteData || {
+                  logo: logoConfig,
+                  socialLinks: socialLinksConfig,
+                  hero: heroConfig,
+                  tutors: tutorsConfig,
+                  courses: coursesConfig,
+                  testimonials: testimonials,
+                  faqs: faqsConfig
+                }}
+                onSave={handleSaveSiteData}
+              />
+            )}
+          </div>
         )}
 
       </main>
@@ -317,6 +402,12 @@ export default function App() {
         onNavigation={setActiveTab} 
         logo={logoConfig}
         socialLinks={socialLinksConfig}
+      />
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
       />
 
     </div>

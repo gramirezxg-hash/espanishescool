@@ -14,6 +14,7 @@ interface HeaderProps {
     letter: string;
     bgColor: string;
     textColor: string;
+    imageUrl?: string;
   };
 }
 
@@ -28,7 +29,8 @@ export default function Header({
     subtitle: "Academia",
     letter: "E",
     bgColor: "#226D7A",
-    textColor: "#FFFFFF"
+    textColor: "#FFFFFF",
+    imageUrl: ""
   }
 }: HeaderProps) {
   const navItems: { id: ActiveTab; label: string }[] = [
@@ -48,20 +50,26 @@ export default function Header({
           className="flex items-center gap-2 text-left cursor-pointer transition-transform active:scale-95"
           id="header-logo-btn"
         >
-          <div 
-            className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm"
-            style={{ backgroundColor: logo.bgColor, color: logo.textColor }}
-          >
-            <span className="font-sans text-xl font-extrabold tracking-tight">{logo.letter}</span>
-          </div>
-          <div>
-            <span className="font-sans text-xl font-black tracking-tight" style={{ color: logo.bgColor }}>
-              {logo.text}
-            </span>
-            <span className="block text-[10px] font-mono leading-none tracking-widest text-[#a73918] uppercase">
-              {logo.subtitle}
-            </span>
-          </div>
+          {logo.imageUrl ? (
+            <img src={logo.imageUrl} alt={logo.text} className="h-10 object-contain" />
+          ) : (
+            <>
+              <div 
+                className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm"
+                style={{ backgroundColor: logo.bgColor, color: logo.textColor }}
+              >
+                <span className="font-sans text-xl font-extrabold tracking-tight">{logo.letter}</span>
+              </div>
+              <div>
+                <span className="font-sans text-xl font-black tracking-tight" style={{ color: logo.bgColor }}>
+                  {logo.text}
+                </span>
+                <span className="block text-[10px] font-mono leading-none tracking-widest text-[#a73918] uppercase">
+                  {logo.subtitle}
+                </span>
+              </div>
+            </>
+          )}
         </button>
 
         {/* Desktop Navigation Links */}

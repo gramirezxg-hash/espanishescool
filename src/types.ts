@@ -1,4 +1,4 @@
-export type ActiveTab = 'home' | 'courses' | 'tutors' | 'pricing' | 'culture' | 'dashboard';
+export type ActiveTab = 'home' | 'courses' | 'tutors' | 'pricing' | 'culture' | 'dashboard' | 'admin';
 
 export interface Lesson {
   id: string;
@@ -105,4 +105,14 @@ export interface CultureBlog {
   content: string;
   image: string;
   readTime: string;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password?: string;
+  role: 'student' | 'admin';
+  credits: number;
+  placementLevel: string;
 }

@@ -10,7 +10,7 @@ interface SocialLink {
 
 interface AdminPanelProps {
   initialData: {
-    logo: { text: string; subtitle: string; letter: string; bgColor: string; textColor: string };
+    logo: { text: string; subtitle: string; letter: string; bgColor: string; textColor: string; imageUrl?: string };
     socialLinks: SocialLink[];
     hero: { title: string; subtitle: string; ctaText: string };
     tutors: Tutor[];
@@ -32,6 +32,24 @@ export default function AdminPanel({ initialData, onSave }: AdminPanelProps) {
   const [logoLetter, setLogoLetter] = useState(initialData.logo.letter);
   const [logoBgColor, setLogoBgColor] = useState(initialData.logo.bgColor);
   const [logoTextColor, setLogoTextColor] = useState(initialData.logo.textColor);
+  const [logoImageUrl, setLogoImageUrl] = useState(initialData.logo.imageUrl || '');
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type !== 'image/png') {
+        alert("Por favor selecciona un archivo de imagen en formato PNG.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (uploadEvent) => {
+        if (uploadEvent.target?.result) {
+          setLogoImageUrl(uploadEvent.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Social links state
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>(initialData.socialLinks || []);
@@ -127,7 +145,8 @@ export default function AdminPanel({ initialData, onSave }: AdminPanelProps) {
         subtitle: logoSubtitle,
         letter: logoLetter,
         bgColor: logoBgColor,
-        textColor: logoTextColor
+        textColor: logoTextColor,
+        imageUrl: logoImageUrl
       },
       socialLinks,
       hero: {
@@ -239,7 +258,6 @@ export default function AdminPanel({ initialData, onSave }: AdminPanelProps) {
         {/* Content Box (9 cols) */}
         <div className="md:col-span-9 bg-gray-50/50 border border-gray-150 rounded-2xl p-5 lg:p-6 min-h-[380px]">
           
-          {/* TAB 1: LOGO CONFIG */}
           {activeSubTab === 'logo' && (
             <div className="space-y-6">
               
@@ -248,25 +266,54 @@ export default function AdminPanel({ initialData, onSave }: AdminPanelProps) {
                 <div>
                   <h4 className="text-[10px] text-gray-400 font-mono tracking-wider font-bold uppercase mb-2">Vista Previa del Logotipo</h4>
                   <div className="flex items-center gap-2">
-                    <div 
-                      className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm font-sans text-xl font-extrabold"
-                      style={{ backgroundColor: logoBgColor, color: logoTextColor }}
-                    >
-                      {logoLetter || 'E'}
-                    </div>
-                    <div className="text-left">
-                      <span className="font-sans text-xl font-black tracking-tight" style={{ color: logoBgColor }}>
-                        {logoText || 'LogoText'}
-                      </span>
-                      <span className="block text-[10px] font-mono leading-none tracking-widest text-[#a73918] uppercase">
-                        {logoSubtitle || 'Sub'}
-                      </span>
-                    </div>
+                    {logoImageUrl ? (
+                      <img src={logoImageUrl} alt="Logo Preview" className="h-10 object-contain rounded-lg border border-gray-100 p-1 bg-white" />
+                    ) : (
+                      <>
+                        <div 
+                          className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm font-sans text-xl font-extrabold"
+                          style={{ backgroundColor: logoBgColor, color: logoTextColor }}
+                        >
+                          {logoLetter || 'E'}
+                        </div>
+                        <div className="text-left">
+                          <span className="font-sans text-xl font-black tracking-tight" style={{ color: logoBgColor }}>
+                            {logoText || 'LogoText'}
+                          </span>
+                          <span className="block text-[10px] font-mono leading-none tracking-widest text-[#a73918] uppercase">
+                            {logoSubtitle || 'Sub'}
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="text-right text-[10px] font-mono text-gray-400 italic">
                   Se actualiza en tiempo real
                 </div>
+              </div>
+
+              {/* File Uploader for PNG */}
+              <div className="bg-white border border-gray-150 p-4 rounded-xl space-y-3">
+                <label className="block font-bold text-gray-700 text-xs">Cargar Logotipo Principal (Formato PNG)</label>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                  <input
+                    type="file"
+                    accept="image/png"
+                    onChange={handleFileChange}
+                    className="flex-1 text-xs text-gray-550 file:mr-4 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-[#226D7A]/15 file:text-[#226D7A] hover:file:bg-[#226D7A]/25 transition-all cursor-pointer"
+                  />
+                  {logoImageUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setLogoImageUrl('')}
+                      className="px-4 py-2 border border-red-200 text-red-500 hover:bg-red-50 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    >
+                      Eliminar Imagen y Usar Texto
+                    </button>
+                  )}
+                </div>
+                <p className="text-[9px] text-gray-400 font-medium">Nota: Para un resultado estético óptimo, se recomienda una imagen PNG con fondo transparente.</p>
               </div>
 
               {/* Input Forms */}
@@ -275,18 +322,20 @@ export default function AdminPanel({ initialData, onSave }: AdminPanelProps) {
                   <label className="block font-bold text-gray-700 mb-1.5">Texto del Logo (Nombre Principal)</label>
                   <input
                     type="text"
+                    disabled={!!logoImageUrl}
                     value={logoText}
                     onChange={(e) => setLogoText(e.target.value)}
-                    className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2.5 text-gray-800 font-bold focus:outline-none focus:border-[#226D7A] transition-colors"
+                    className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2.5 text-gray-800 font-bold focus:outline-none focus:border-[#226D7A] transition-colors disabled:opacity-50"
                   />
                 </div>
                 <div>
                   <label className="block font-bold text-gray-700 mb-1.5">Subtítulo (Ej. Academia)</label>
                   <input
                     type="text"
+                    disabled={!!logoImageUrl}
                     value={logoSubtitle}
                     onChange={(e) => setLogoSubtitle(e.target.value)}
-                    className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2.5 text-gray-800 focus:outline-none focus:border-[#226D7A] transition-colors"
+                    className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2.5 text-gray-800 focus:outline-none focus:border-[#226D7A] transition-colors disabled:opacity-50"
                   />
                 </div>
                 <div>
@@ -294,9 +343,10 @@ export default function AdminPanel({ initialData, onSave }: AdminPanelProps) {
                   <input
                     type="text"
                     maxLength={2}
+                    disabled={!!logoImageUrl}
                     value={logoLetter}
                     onChange={(e) => setLogoLetter(e.target.value)}
-                    className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2.5 text-gray-800 font-mono text-center focus:outline-none focus:border-[#226D7A] transition-colors"
+                    className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2.5 text-gray-800 font-mono text-center focus:outline-none focus:border-[#226D7A] transition-colors disabled:opacity-50"
                   />
                 </div>
                 <div>

@@ -16,6 +16,7 @@ interface FooterProps {
     letter: string;
     bgColor: string;
     textColor: string;
+    imageUrl?: string;
   };
   socialLinks?: SocialLink[];
 }
@@ -27,7 +28,8 @@ export default function Footer({
     subtitle: "Academia",
     letter: "E",
     bgColor: "#226D7A",
-    textColor: "#FFFFFF"
+    textColor: "#FFFFFF",
+    imageUrl: ""
   },
   socialLinks = []
 }: FooterProps) {
@@ -40,15 +42,21 @@ export default function Footer({
           
           {/* Logo Brand Frame */}
           <div className="md:col-span-5">
-            <div className="flex items-center gap-2 mb-3">
-              <div 
-                className="flex h-9 w-9 items-center justify-center rounded-lg font-sans font-black text-sm"
-                style={{ backgroundColor: logo.bgColor, color: logo.textColor }}
-              >
-                {logo.letter}
+            {logo.imageUrl ? (
+              <div className="flex items-center gap-2 mb-3">
+                <img src={logo.imageUrl} alt={logo.text} className="h-9 object-contain" />
               </div>
-              <span className="font-sans text-lg font-black text-white tracking-tight">{logo.text}</span>
-            </div>
+            ) : (
+              <div className="flex items-center gap-2 mb-3">
+                <div 
+                  className="flex h-9 w-9 items-center justify-center rounded-lg font-sans font-black text-sm"
+                  style={{ backgroundColor: logo.bgColor, color: logo.textColor }}
+                >
+                  {logo.letter}
+                </div>
+                <span className="font-sans text-lg font-black text-white tracking-tight">{logo.text}</span>
+              </div>
+            )}
             <p className="font-sans text-xs text-white/50 leading-relaxed max-w-sm mb-4">
               La academia líder de inmersión personalizada en español de México. Conectamos alumnos de todo el mundo con educadores nativos calificados desde la comodidad de sus hogares.
             </p>
@@ -125,6 +133,12 @@ export default function Footer({
                 <button onClick={() => onNavigation('culture')} className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#B0E0E9]" />
                   Blog Cultural (Cultural Blog)
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigation('admin')} className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5" id="footer-admin-link">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#fe7952]" />
+                  Acceso Administrador
                 </button>
               </li>
               <li>
